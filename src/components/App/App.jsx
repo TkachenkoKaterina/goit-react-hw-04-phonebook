@@ -7,17 +7,14 @@ import Filter from '../Filter/Filter';
 import css from './App.module.css';
 
 export const App = () => {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState(() => {
+    const storedContacts = JSON.parse(localStorage.getItem('contacts'));
+    return storedContacts || [];
+  });
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    const storedContacts = JSON.parse(localStorage.getItem('contacts'));
-    if (storedContacts) {
-      setContacts(Array.isArray(storedContacts) ? storedContacts : []);
-    }
-  }, []);
-
-  useEffect(() => {
+    console.log(console.log('didMount'));
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
